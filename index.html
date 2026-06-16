@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T-Shop — عرض استراتيجي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Araboto';
+    src: url('https://db.onlinewebfonts.com/t/4a4b5de72dc85e8f15cf04ffd1a7e99e.woff2') format('woff2'),
+         url('https://db.onlinewebfonts.com/t/4a4b5de72dc85e8f15cf04ffd1a7e99e.woff') format('woff');
+    font-weight: normal;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #022242;
+    --bg-card:  #03305e;
+    --bg-deep:  #011830;
+    --yellow:   #f7ff9a;
+    --yellow-dim: rgba(247,255,154,0.15);
+    --yellow-border: rgba(247,255,154,0.3);
+    --white:    #ffffff;
+    --soft:     rgba(255,255,255,0.55);
+    --softer:   rgba(255,255,255,0.3);
+    --border:   rgba(255,255,255,0.12);
+    --green:    #2ecc9a;
+    --green-dim: rgba(46,204,154,0.15);
+    --red:      #ff6b6b;
+    --red-dim:  rgba(255,107,107,0.15);
+    --amber:    #ffd166;
+    --amber-dim: rgba(255,209,102,0.15);
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Araboto', 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+    background: var(--bg-deep);
+    color: var(--white);
+    direction: rtl;
+  }
+
+  /* ─── SLIDE WRAPPER (contained) ─── */
+  .slide-outer {
+    width: 100%;
+    background: var(--bg-deep);
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    padding: 32px 24px 40px;
+    border-bottom: 2px solid rgba(255,255,255,0.05);
+    min-height: 100vh;
+  }
+
+  .slide {
+    width: 100%;
+    max-width: 1100px;
+    background: var(--bg);
+    border-radius: 18px;
+    padding: 56px 64px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+
+  /* ─── LOGO ─── */
+  .logo {
+    position: absolute;
+    top: 28px;
+    right: 40px;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* ─── SLIDE NUMBER ─── */
+  .slide-num {
+    position: absolute;
+    bottom: 24px;
+    left: 40px;
+    font-size: 11px;
+    color: var(--softer);
+    letter-spacing: 0.1em;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* ─── NAVIGATION ─── */
+  .nav-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(1,24,48,0.97);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    z-index: 100;
+    border-top: 1px solid var(--border);
+  }
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-dot.active { background: var(--yellow); transform: scale(1.3); }
+  .nav-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--soft);
+    font-size: 12px;
+    font-family: 'Araboto', 'Cairo', sans-serif;
+    padding: 5px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  .nav-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+
+  /* ─── TYPOGRAPHY ─── */
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 16px;
+    opacity: 0.75;
+    font-family: 'Araboto', 'Cairo', sans-serif;
+  }
+
+  h1 {
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.2;
+    color: var(--yellow);
+    margin-bottom: 18px;
+    font-family: 'Araboto', 'Cairo', sans-serif;
+  }
+
+  h2 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--yellow);
+    margin-bottom: 14px;
+    font-family: 'Araboto', 'Cairo', sans-serif;
+  }
+
+  h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--yellow);
+    margin-bottom: 10px;
+    font-family: 'Araboto', 'Cairo', sans-serif;
+  }
+
+  .subtitle {
+    font-size: 17px;
+    color: var(--soft);
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+
+  p {
+    font-size: 14.5px;
+    color: var(--soft);
+    line-height: 1.75;
+  }
+
+  strong { color: var(--white); font-weight: 700; }
+
+  /* ─── COVER ─── */
+  .slide-cover { background: var(--bg-deep); }
+
+  .verdict-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--yellow-border);
+    border-radius: 6px;
+    padding: 14px 22px;
+    margin-top: 32px;
+    background: var(--yellow-dim);
+  }
+  .verdict-pill .vp-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    font-weight: 700;
+    opacity: 0.7;
+  }
+  .verdict-pill .vp-sep { color: var(--border); }
+  .verdict-pill .vp-val {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .cover-meta {
+    margin-top: 44px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--softer);
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── STAT GRID ─── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 30px;
+  }
+  .stat-cell {
+    background: var(--bg-card);
+    padding: 22px 16px;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--yellow);
+    line-height: 1;
+    margin-bottom: 8px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    direction: ltr;
+  }
+  .stat-desc {
+    font-size: 12px;
+    color: var(--soft);
+    line-height: 1.5;
+  }
+
+  /* ─── HIGHLIGHT BOXES ─── */
+  .verdict-box {
+    background: var(--green-dim);
+    border-right: 3px solid var(--green);
+    border-left: none;
+    border-radius: 8px 0 0 8px;
+    padding: 16px 20px;
+    margin-top: 22px;
+  }
+  .verdict-box .vb-label {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .verdict-box p { font-size: 14px; color: var(--white); line-height: 1.65; }
+
+  .warn-box {
+    background: var(--amber-dim);
+    border-right: 3px solid var(--amber);
+    border-left: none;
+    border-radius: 8px 0 0 8px;
+    padding: 16px 20px;
+    margin-top: 22px;
+  }
+  .warn-box .vb-label {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .warn-box p { font-size: 14px; color: var(--white); line-height: 1.65; }
+
+  /* ─── COMPARISON TABLE ─── */
+  .comp-wrap {
+    margin-top: 24px;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    padding: 12px 16px;
+    text-align: right;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border);
+    color: var(--softer);
+    background: var(--bg-card);
+  }
+  thead th:nth-child(2) { background: var(--green-dim); color: var(--green); }
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    vertical-align: top;
+    line-height: 1.55;
+    color: var(--soft);
+    text-align: right;
+  }
+  td:first-child {
+    font-weight: 600;
+    color: var(--softer);
+    font-size: 12.5px;
+  }
+  td:nth-child(2) { background: rgba(46,204,154,0.04); }
+  .win { color: var(--green); font-weight: 700; }
+  .loss { color: var(--red); }
+  tr:last-child td { border-bottom: none; }
+
+  /* ─── MARGIN BARS ─── */
+  .margin-diagram { margin-top: 24px; }
+  .margin-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; flex-direction: row-reverse; }
+  .margin-label { font-size: 13px; font-weight: 600; color: var(--soft); width: 180px; flex-shrink: 0; text-align: right; }
+  .margin-bar-wrap { flex: 1; background: rgba(255,255,255,0.07); border-radius: 4px; height: 26px; overflow: hidden; }
+  .margin-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 10px; font-size: 12px; font-weight: 700; color: var(--bg); font-family: 'Helvetica Neue', Arial, sans-serif; direction: ltr; }
+  .bar-green { background: var(--green); width: 75%; }
+  .bar-red { background: var(--red); width: 16%; }
+  .margin-val { font-size: 13px; font-weight: 700; width: 70px; flex-shrink: 0; font-family: 'Helvetica Neue', Arial, sans-serif; direction: ltr; }
+
+  /* ─── BUYER GRID ─── */
+  .buyer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .buyer-card {
+    background: var(--bg-card);
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid var(--border);
+  }
+  .buyer-card h3 {
+    font-size: 12px;
+    color: var(--yellow);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.8;
+  }
+  .buyer-card ul { list-style: none; }
+  .buyer-card li {
+    font-size: 13px;
+    color: var(--soft);
+    padding: 6px 0 6px 0;
+    padding-right: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    line-height: 1.55;
+  }
+  .buyer-card li::before { content: '—'; position: absolute; right: 0; color: rgba(255,255,255,0.2); }
+  .buyer-card li:last-child { border-bottom: none; }
+
+  /* ─── CASE STUDY LAYOUT ─── */
+  .case-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+    margin-top: 16px;
+  }
+
+  .case-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+  .tag-ecom   { background: rgba(46,204,154,0.15); color: var(--green); border: 1px solid rgba(46,204,154,0.3); }
+  .tag-market { background: rgba(180,140,255,0.15); color: #c4a0ff; border: 1px solid rgba(180,140,255,0.3); }
+  .tag-evolved { background: var(--yellow-dim); color: var(--yellow); border: 1px solid var(--yellow-border); }
+
+  .case-body p { font-size: 14px; color: var(--soft); line-height: 1.7; margin-bottom: 12px; }
+
+  .key-lesson {
+    background: var(--bg-deep);
+    border: 1px solid var(--yellow-border);
+    border-radius: 12px;
+    padding: 26px;
+  }
+  .key-lesson .kl-label {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    font-weight: 700;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+  .key-lesson p {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .lesson-points { margin-top: 16px; list-style: none; }
+  .lesson-points li {
+    font-size: 13.5px;
+    color: var(--soft);
+    padding: 8px 20px 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    line-height: 1.55;
+  }
+  .lesson-points li::before { content: '←'; position: absolute; right: 0; color: var(--green); font-weight: 700; }
+  .lesson-points li:last-child { border-bottom: none; }
+
+  /* ─── INNER CARD ─── */
+  .inner-card {
+    margin-top: 16px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-card);
+  }
+  .inner-card h3 {
+    font-size: 11px;
+    color: var(--softer);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+
+  /* ─── PHASE ROADMAP ─── */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 26px;
+  }
+  .phase-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 16px;
+    background: rgba(255,255,255,0.04);
+  }
+  .phase-card.active {
+    border-color: var(--yellow-border);
+    background: var(--yellow-dim);
+  }
+  .phase-num-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--soft);
+    margin-bottom: 10px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .phase-card.active .phase-num-badge { background: var(--yellow); color: var(--bg); }
+  .phase-time {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--softer);
+    margin-bottom: 7px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .phase-card.active .phase-time { color: var(--yellow); opacity: 0.7; }
+  .phase-title-sm {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .phase-card.active .phase-title-sm { color: var(--yellow); }
+  .phase-desc-sm {
+    font-size: 12px;
+    color: var(--softer);
+    line-height: 1.6;
+  }
+
+  /* ─── VERDICT SLIDE ─── */
+  .slide-verdict { background: var(--bg-deep); }
+  .slide-verdict h2 { font-size: 34px; }
+
+  .verdict-points {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .vp-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-size: 14px;
+    color: var(--soft);
+    line-height: 1.55;
+  }
+  .vp-item strong {
+    display: block;
+    color: var(--yellow);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+
+  /* ─── TIMELINE ITEMS ─── */
+  .timeline { display: flex; flex-direction: column; gap: 10px; }
+  .tl-item { display: flex; gap: 12px; align-items: flex-start; flex-direction: row-reverse; font-size: 13px; }
+  .tl-badge {
+    color: var(--bg);
+    border-radius: 4px;
+    padding: 2px 9px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+  }
+  .tl-text { color: var(--soft); line-height: 1.5; padding-top: 2px; }
+
+  /* ─── PARALLEL GRID ─── */
+  .parallel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pg-item { font-size: 12px; color: var(--soft); }
+  .pg-item .pg-title { font-weight: 700; margin-bottom: 3px; }
+
+  @media (max-width: 768px) {
+    .slide { padding: 36px 28px; }
+    h1 { font-size: 34px; }
+    h2 { font-size: 22px; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .buyer-grid { grid-template-columns: 1fr; }
+    .case-layout { grid-template-columns: 1fr; }
+    .roadmap { grid-template-columns: 1fr 1fr; }
+    .verdict-points { grid-template-columns: 1fr; }
+    .comp-wrap { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+
+<!-- ══════════════════════════════════════════
+     شريحة 1 — الغلاف
+══════════════════════════════════════════ -->
+<div class="slide-outer" id="slide-1">
+  <div class="slide slide-cover">
+    <div class="logo">T-Shop</div>
+
+    <div class="eyebrow">تحليل استراتيجي لنموذج العمل</div>
+    <h1>E-Commerce<br>أم Marketplace؟</h1>
+    <p class="subtitle">توصية مبنية على الأدلة لدخول T-Shop إلى السوق الأمريكية في قطاع التجهيزات التجارية وتصميم المتاجر.</p>
+
+    <div class="verdict-pill">
+      <span class="vp-label">التوصية</span>
+      <span class="vp-sep">/</span>
+      <span class="vp-val">الإطلاق كـ E-Commerce مباشر ← التطور تدريجياً</span>
+    </div>
+
+    <div class="cover-meta">معد لـ T-Shop / قيادة T-Lines &nbsp;·&nbsp; استراتيجية دخول السوق الأمريكية &nbsp;·&nbsp; يونيو 2026</div>
+
+    <div class="slide-num">1 / 8</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     شريحة 2 — فرصة السوق
+══════════════════════════════════════════ -->
+<div class="slide-outer" id="slide-2">
+  <div class="slide">
+    <div class="logo">T-Shop</div>
+
+    <div class="eyebrow">الفرصة</div>
+    <h2>السوق ضخم وينمو، ولا يوجد لاعب رقمي مسيطر بعد.</h2>
+    <p class="subtitle">المشترون في قطاع B2B يتحولون بسرعة إلى الشراء الرقمي — وقطاع تجهيزات المتاجر في أمريكا لم يملأ أحد فراغه الرقمي بعد.</p>
+
+    <div class="stat-grid">
+      <div class="stat-cell">
+        <div class="stat-num">$4.6T</div>
+        <div class="stat-desc">حجم سوق B2B e-commerce الأمريكي المتوقع بحلول 2025</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">$2.4B</div>
+        <div class="stat-desc">حجم سوق تجهيزات المتاجر عالمياً في 2025 بنمو 4.76% سنوياً</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">80%</div>
+        <div class="stat-desc">من مشتري B2B يفضلون إتمام طلباتهم عبر القنوات الرقمية</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">12.1%</div>
+        <div class="stat-desc">نمو B2B e-commerce الأمريكي في 2024 — نمو هيكلي وليس موسمياً</div>
+      </div>
+    </div>
+
+    <div class="verdict-box">
+      <div class="vb-label">نافذة الدخول</div>
+      <p>لا توجد علامة تجارية رقمية واضحة تهيمن على سوق تجهيزات المتاجر في أمريكا. السوق مجزأ بين مصنّعين تقليديين وكتالوجات قديمة. T-Shop قادر على احتلال موقع "e-commerce المتاجر العصري والمتميز بالتصميم" قبل أي منافس آخر.</p>
+    </div>
+
+    <div class="slide-num">2 / 8</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     شريحة 3 — المقارنة
+══════════════════════════════════════════ -->
+<div class="slide-outer" id="slide-3">
+  <div class="slide">
+    <div class="logo">T-Shop</div>
+
+    <div class="eyebrow">مقارنة النموذجين</div>
+    <h2>E-Commerce المباشر يتفوق في كل بُعد يهم عند الإطلاق.</h2>
+
+    <div class="comp-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>المعيار</th>
+            <th>✓ E-Commerce مباشر (الموصى به)</th>
+            <th>✗ Marketplace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>هامش الربح</td>
+            <td class="win">25–45% — ملكية كاملة للهامش</td>
+            <td class="loss">8–10% عمولة فقط من قيمة المبيعات</td>
+          </tr>
+          <tr>
+            <td>الوقت لأول إيراد</td>
+            <td class="win">3–6 أشهر بمجموعة SKU مركّزة</td>
+            <td class="loss">12–18 شهراً كحد أدنى</td>
+          </tr>
+          <tr>
+            <td>تعقيد الإطلاق</td>
+            <td class="win">استقطاب المشترين فقط (طرف واحد)</td>
+            <td class="loss">استقطاب بائعين ومشترين في آنٍ واحد</td>
+          </tr>
+          <tr>
+            <td>السيطرة على العلامة التجارية</td>
+            <td class="win">تحكم كامل بالسعر والتجربة والجودة</td>
+            <td class="loss">العلامة تضيع بين بائعين متعددين</td>
+          </tr>
+          <tr>
+            <td>التوافق مع مفهوم "Line"</td>
+            <td class="win">توافق طبيعي — مجموعات منسّقة وهوية تصميمية موحّدة</td>
+            <td class="loss">تعارض — الـ marketplace يجمع جماليات متنافسة</td>
+          </tr>
+          <tr>
+            <td>ميزة تصنيع T-Lines</td>
+            <td class="win">مُستثمَرة بالكامل — توريد بسعر التكلفة + هامش</td>
+            <td class="loss">مُهدَرة تماماً — البائعون يوردون باستقلالية</td>
+          </tr>
+          <tr>
+            <td>متطلبات التقنية</td>
+            <td class="win">Shopify B2B / BigCommerce — أدوات جاهزة ومُجرَّبة</td>
+            <td class="loss">بنية تحتية مخصصة للـ marketplace بتكلفة عالية</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="margin-diagram">
+      <div class="margin-row">
+        <div class="margin-label">E-Commerce مباشر</div>
+        <div class="margin-bar-wrap"><div class="margin-bar bar-green">25–45% هامش ربح</div></div>
+        <div class="margin-val" style="color:var(--green);">25–45%</div>
+      </div>
+      <div class="margin-row">
+        <div class="margin-label">Marketplace</div>
+        <div class="margin-bar-wrap"><div class="margin-bar bar-red">8–10%</div></div>
+        <div class="margin-val" style="color:var(--red);">8–10%</div>
+      </div>
+    </div>
+
+    <div class="slide-num">3 / 8</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     شريحة 4 — سلوك المشتري
+══════════════════════════════════════════ -->
+<div class="slide-outer" id="slide-4">
+  <div class="slide">
+    <div class="logo">T-Shop</div>
+
+    <div class="eyebrow">سلوك المشتري</div>
+    <h2>مشتروك لا يتسوّقون كمستهلكين — ولا يستخدمون الـ marketplace.</h2>
+
+    <div class="buyer-grid">
+      <div class="buyer-card">
+        <h3>تجار التجزئة المستقلون والشركات الصغيرة</h3>
+        <ul>
+          <li>يشترون أثناء مرحلة التخطيط للمتجر — قرار واحد ذو مخاطرة عالية</li>
+          <li>يفضلون التعامل المباشر مع المورّد بسبب حاجتهم للثقة</li>
+          <li>يريدون مجموعات منسّقة — تقلّل التشتت في الاختيار</li>
+          <li>قيمة عمر العميل مرتفعة: يعيدون الشراء عند كل توسّع</li>
+        </ul>
+      </div>
+      <div class="buyer-card">
+        <h3>مشغّلو الامتيازات التجارية</h3>
+        <ul>
+          <li>التوحيد غير قابل للتفاوض — التجهيزات يجب أن تتطابق في كل الفروع</li>
+          <li>مفهوم "Line" يحلّ مشكلتهم الجوهرية مباشرةً</li>
+          <li>متوسط قيمة الطلب مرتفع: 20 ألف – 80 ألف دولار أو أكثر</li>
+          <li>لن يستخدموا الـ marketplace — المخاطرة على الجودة غير مقبولة</li>
+        </ul>
+      </div>
+      <div class="buyer-card">
+        <h3>مشغّلو المطاعم والضيافة</h3>
+        <ul>
+          <li>التجهيزات قرار تصميمي وليست سلعة عادية</li>
+          <li>مهل التسليم من 8 إلى 16 أسبوعاً مقبولة في هذا القطاع</li>
+          <li>يعملون مع مصممين داخليين — قناة إحالة أساسية للاستهداف</li>
+          <li>يعيشون في الفجوة بين 40 ألف و100 ألف دولار: مكلّف للتخصيص الكامل، رخيص لشيء أساسي</li>
+        </ul>
+      </div>
+      <div class="buyer-card">
+        <h3>سلوك الشراء الرقمي (عبر الشرائح)</h3>
+        <ul>
+          <li>39% من مشتري B2B ينفقون أكثر من 500 ألف دولار عبر self-service رقمي</li>
+          <li>يبحثون رقمياً بعمق قبل الالتزام — ROI مرتفع للـ SEO</li>
+          <li>يحدّدون مورّداً أو اثنين ويتعمّقون معهم — لا يتصفّحون الـ marketplace</li>
+          <li>نقطة التواصل البشرية لا تزال حاسمة في أول عملية شراء</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="verdict-box">
+      <div class="vb-label">الخلاصة الهيكلية</div>
+      <p>مشترو T-Shop يبحثون عن مورّد موثوق يفهم التصميم ويُسلّم في الوقت المحدد بالجودة المطلوبة. هذا يتحقق في متجر مباشر مع طبقة مبيعات بشرية — وليس في marketplace متعدد البائعين.</p>
+    </div>
+
+    <div class="slide-num">4 / 8</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     شريحة 5 — حالة دراسية: Displays2Go
+══════════════════════════════════════════ -->
+<div class="slide-outer" id="slide-5">
+  <div class="slide">
+    <div class="logo">T-Shop</div>
+
+    <div class="eyebrow">حالة دراسية 01 — حين ينتصر E-Commerce المباشر</div>
+
+    <div class="case-layout">
+      <div class="case-body">
+        <div class="case-tag tag-ecom">E-Commerce مباشر</div>
+        <h2>Displays2Go</h2>
+        <p>أُسّست عام 1974 كمصنّع محلي صغير للشاشات الأكريليك في نيو إنجلاند. في 1996 اتخذوا قراراً محورياً واحداً: التحوّل من مصنّع إقليمي إلى <strong>بائع e-commerce وطني</strong>.</p>
+        <p>بدلاً من بناء marketplace، ذهبوا أعمق في <strong>سلسلة التوريد الخاصة بهم</strong> — مزجوا بين التصنيع المحلي والاستيراد للحفاظ على السيطرة على الكتالوج.</p>
+        <p>النتيجة: شحن في نفس اليوم للمنتجات المخزّنة، خدمة الشركات الكبيرة والصغيرة على حدٍّ سواء — تماماً كشريحة T-Shop المستهدفة. اكتسبتهم TAKKT AG لاحقاً بقيمة ملحوظة.</p>
+
+        <ul class="lesson-points" style="margin-top:16px;">
+          <li>امتلك الكتالوج، تحكّم في سلسلة التوريد</li>
+          <li>التوزيع الرقمي أوّلاً يعمل حين تُحافَظ على الجودة</li>
+          <li>من نيش محلي إلى وطني: المسار مُجرَّب في هذا القطاع</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="key-lesson">
+          <div class="kl-label">الدرس الأساسي لـ T-Shop</div>
+          <p>"امتلك الكتالوج. تحكّم في التوريد. نموذج Displays2Go هو نموذج T-Shop."</p>
+        </div>
+
+        <div class="inner-card">
+          <h3>أوجه التشابه</h3>
+          <div class="parallel-grid">
+            <div class="pg-item">
+              <div class="pg-title" style="color:var(--soft);">Displays2Go — 1996</div>
+              مصنّع إقليمي ← كتالوج e-commerce وطني
+            </div>
+            <div class="pg-item">
+              <div class="pg-title" style="color:var(--yellow);">T-Shop — 2026</div>
+              مصنّع T-Lines ← علامة e-commerce أمريكية
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">5 / 8</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     شريحة 6 — حالة دراسية: Faire
+══════════════════════════════════════════ -->
+<div class="slide-outer" id="slide-6">
+  <div class="slide">
+    <div class="logo">T-Shop</div>
+
+    <div class="eyebrow">حالة دراسية 02 — متى يصلح الـ Marketplace فعلاً؟</div>
+
+    <div class="case-layout">
+      <div class="case-body">
+        <div class="case-tag tag-market">Marketplace</div>
+        <h2>Faire</h2>
+        <p>أُطلق عام 2017. بحلول 2024 أصبح الـ marketplace الأكثر هيمنة في قطاع B2B للبيع بالجملة. لكن نجاح Faire جاء من حلّ <strong>مشكلة هيكلية محدّدة جداً</strong> — وليس من مجرّد تجميع البائعين.</p>
+        <p>الفكرة: تجار التجزئة المستقلون كانوا مترددين في الشراء بسبب <strong>مخاطرة المخزون</strong>. حلّ Faire: دفع مؤجّل 60 يوماً وإرجاع مجاني لأول طلب.</p>
+        <p>Faire لم يبنِ marketplace ليجمّع البائعين — بل بناه لأن المنصة كانت الحلّ الوحيد لمشكلة ثقة ومخاطرة على مستوى الصناعة.</p>
+
+        <div class="warn-box">
+          <div class="vb-label">الفارق الجوهري</div>
+          <p>سوق T-Shop لا يعاني من مشكلة مخاطرة أو تجزّؤ تحتاج marketplace لحلّها. قطاع Faire احتاج marketplace. قطاع T-Shop لا يحتاجه.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="key-lesson">
+          <div class="kl-label">الدرس الأساسي لـ T-Shop</div>
+          <p>"الـ marketplace يربح حين يحلّ فشلاً هيكلياً في السوق. سوق T-Shop لا يعاني من هذا الفشل."</p>
+        </div>
+
+        <div class="inner-card">
+          <h3>الـ Marketplace يصلح حين...</h3>
+          <ul class="lesson-points">
+            <li>العرض مجزّأ جداً لمورّد واحد</li>
+            <li>توجد مشكلة ثقة أو مخاطرة تعيق المعاملات</li>
+            <li>تكرار الشراء مرتفع (منتجات استهلاكية)</li>
+            <li>لديك رأس مال ضخم لحلّ مشكلة الانطلاق من الصفر</li>
+          </ul>
+          <p style="font-size:12px; color:var(--red); margin-top:14px; font-weight:700;">لا يوجد أي شرط من هذه الشروط في إطلاق T-Shop.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">6 / 8</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     شريحة 7 — حالة دراسية: Wayfair
+══════════════════════════════════════════ -->
+<div class="slide-outer" id="slide-7">
+  <div class="slide">
+    <div class="logo">T-Shop</div>
+
+    <div class="eyebrow">حالة دراسية 03 — ابدأ ضيّقاً، توسّع لاحقاً</div>
+
+    <div class="case-layout">
+      <div class="case-body">
+        <div class="case-tag tag-evolved">نموذج تطوّري</div>
+        <h2>Wayfair (المرحلة الأولى)</h2>
+        <p>Wayfair لم تبدأ كـ Wayfair. في 2002 أُطلقت كـ <strong>CSN Stores</strong> — أكثر من 200 موقع e-commerce متخصص، كل موقع في فئة ضيّقة (موقع للشموع، موقع لأدوات الطهي...).</p>
+        <p>بنوا المصداقية عبر <strong>التركيز في النيش أوّلاً</strong>. فقط في 2011 — بعد تسع سنوات — دمجوا كل شيء في علامة تجارية موحّدة بعناصر marketplace.</p>
+        <p>Wayfair اليوم جمعت مئات الملايين من التمويل وما تزال تعمل بهوامش ضيّقة. الدرس ليس في حجمها الحالي — بل في مرحلتها الأولى.</p>
+
+        <div class="verdict-box">
+          <div class="vb-label">النموذج الصحيح للاستلهام</div>
+          <p>CSN Stores في مرحلتها الأولى هي المثيل الصحيح لـ T-Shop — وليس Wayfair اليوم. ابدأ بـ 2–3 مجموعات Line مركّزة، أثبت الطلب، ثم توسّع. وليس العكس.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="key-lesson">
+          <div class="kl-label">الدرس الأساسي لـ T-Shop</div>
+          <p>"ابدأ ضيّقاً. بنِ علامتك جيداً. أثبت الطلب في نيش محدد. التوسّع يأتي لاحقاً — ويحتاج رأس مال ضخم لا تملكه الآن."</p>
+        </div>
+
+        <div class="inner-card">
+          <h3>الواقع الزمني لـ Wayfair</h3>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-badge" style="background:var(--green);">2002</div>
+              <div class="tl-text">200+ موقع e-commerce متخصص — نموذج مباشر ومركّز</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-badge" style="background:var(--soft);">2011</div>
+              <div class="tl-text">علامة تجارية موحّدة — بعد 9 سنوات بطلب مُثبَت</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-badge" style="background:var(--red);">2024</div>
+              <div class="tl-text">ما تزال غير مربحة — تحتاج رأس مال هائل</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">7 / 8</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     شريحة 8 — التوصية النهائية
+══════════════════════════════════════════ -->
+<div class="slide-outer" id="slide-8">
+  <div class="slide slide-verdict">
+    <div class="logo">T-Shop</div>
+
+    <div class="eyebrow" style="opacity:0.5;">التوصية النهائية</div>
+    <h2>أطلق مباشراً. أثبت الطلب. دع السوق يحدّد متى تتطوّر.</h2>
+    <p class="subtitle">كل الأدلة — سلوك المشتري، الهوامش، الحالات الدراسية، مزايا T-Shop — تتقاطع في إجابة واحدة.</p>
+
+    <div class="roadmap">
+      <div class="phase-card active">
+        <div class="phase-num-badge">1</div>
+        <div class="phase-time">الأشهر 1–6</div>
+        <div class="phase-title-sm">أطلق 2–3 مجموعات Line، 40–80 منتجاً</div>
+        <div class="phase-desc-sm">Shopify B2B. تصنيع T-Lines. أسواق أتلانتا وفينيكس وكونيتيكت. أول إيراد.</div>
+      </div>
+      <div class="phase-card" style="background:rgba(255,255,255,0.04);">
+        <div class="phase-num-badge">2</div>
+        <div class="phase-time">الأشهر 6–18</div>
+        <div class="phase-title-sm">وسّع الفئات الناجحة وبنِ العلامة</div>
+        <div class="phase-desc-sm">توسيع عمق المنتجات. إدارة حسابات الامتياز. محرك محتوى SEO.</div>
+      </div>
+      <div class="phase-card" style="background:rgba(255,255,255,0.04);">
+        <div class="phase-num-badge">3</div>
+        <div class="phase-time">الأشهر 18–30</div>
+        <div class="phase-title-sm">أضف 5–10 شركاء بائعين منتقَين</div>
+        <div class="phase-desc-sm">فئات مكمّلة فقط. نموذج متجر متخصص — وليس marketplace مفتوح.</div>
+      </div>
+      <div class="phase-card" style="background:rgba(255,255,255,0.04);">
+        <div class="phase-num-badge">4</div>
+        <div class="phase-time">الشهر 30+</div>
+        <div class="phase-title-sm">تطوّر المنصة بناءً على البيانات</div>
+        <div class="phase-desc-sm">دع أدلة السوق الحقيقية — وليس الافتراضات — تحدّد الخطوات التالية.</div>
+      </div>
+    </div>
+
+    <div class="verdict-points">
+      <div class="vp-item">
+        <strong>الهامش</strong>
+        25–45% هامش ربح مقابل 8–10% في الـ marketplace — أكثر ربحية بـ 3–4 أضعاف من اليوم الأول
+      </div>
+      <div class="vp-item">
+        <strong>السرعة</strong>
+        أول إيراد خلال 3–6 أشهر مقابل 12–18 شهراً لمشكلة الانطلاق من الصفر في الـ marketplace
+      </div>
+      <div class="vp-item">
+        <strong>الميزة التنافسية</strong>
+        قوة تصنيع T-Lines تتجلى فقط في النموذج المباشر — وتُهدَر تماماً في الـ marketplace
+      </div>
+      <div class="vp-item">
+        <strong>المشتري</strong>
+        مشترو التجهيزات لا يتسوّقون في الـ marketplace — يختارون مورّداً أو اثنين ويتعمّقون معهم
+      </div>
+    </div>
+
+    <div class="slide-num" style="color:var(--softer);">8 / 8</div>
+  </div>
+</div>
+
+
+<!-- ─── شريط التنقّل ─── -->
+<div class="nav-bar">
+  <button class="nav-btn" onclick="navigate(1)">→ السابق</button>
+  <button class="nav-dot active" onclick="goTo(0)" title="الغلاف"></button>
+  <button class="nav-dot" onclick="goTo(1)" title="الفرصة"></button>
+  <button class="nav-dot" onclick="goTo(2)" title="المقارنة"></button>
+  <button class="nav-dot" onclick="goTo(3)" title="سلوك المشتري"></button>
+  <button class="nav-dot" onclick="goTo(4)" title="Displays2Go"></button>
+  <button class="nav-dot" onclick="goTo(5)" title="Faire"></button>
+  <button class="nav-dot" onclick="goTo(6)" title="Wayfair"></button>
+  <button class="nav-dot" onclick="goTo(7)" title="التوصية"></button>
+  <button class="nav-btn" onclick="navigate(-1)">التالي ←</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide-outer');
+  const dots   = document.querySelectorAll('.nav-dot');
+  let current  = 0;
+
+  function goTo(index) {
+    current = Math.max(0, Math.min(slides.length - 1, index));
+    slides[current].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  // Keyboard: RTL-friendly — Right goes back, Left goes forward
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); navigate(-1); }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp')                     { e.preventDefault(); navigate(1);  }
+  });
+
+  // Intersection observer for dot sync
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = Array.from(slides).indexOf(entry.target);
+        if (idx !== -1) {
+          current = idx;
+          dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        }
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
